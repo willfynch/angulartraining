@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  my_app:
+    container_name: angular_app
+    build:
+      context: . #tell docker file is at root of docker compose
+    ports:
+      - '4200:4200'
+    volumes:
+      - ./my-app:/app # my app is my file and :/app is container file
