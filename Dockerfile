@@ -4,13 +4,16 @@ FROM node
 WORKDIR /app
 
 # everything happens in /app
-COPY /my-app /app
+COPY /my-app ./
 
 # initialize project with dependencies
-COPY package.json /app
+COPY /my-app/package.json /app
 
 # copy also json-lock to prevent conflicts with newer versions
-COPY package-lock.json /app
+COPY /my-app/package-lock.json /app
+
+
+RUN npm install -g npm@7.5.6
 
 # need angular cli to have angular cli in the future container
 RUN npm install -g @angular/cli 
@@ -22,16 +25,13 @@ RUN npm install
 #expose port to show app in browser
 EXPOSE 4200
 
+# tell container to add in container path all modules installed with npm
+ENV PATH /app/node_modules/.bin:$PATH
 
 # The main purpose of a CMD is to provide defaults for an executing container
 
 #launch project 
 CMD ng serve --host 0.0.0.0
-
-# tell container to add in container path all modules installed with npm
-ENV PATH /app/node_modules/.bin:$PATH
-
-
 
 # two possibilities 
 # 1 : docker build

@@ -8,3 +8,4 @@ services:
       - '4200:4200'
     volumes:
       - ./my-app:/app # my app is my file and :/app is container file
+      - /app/node_modules
